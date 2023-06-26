@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_26_105316) do
+ActiveRecord::Schema.define(version: 2023_06_26_110330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,25 @@ ActiveRecord::Schema.define(version: 2023_06_26_105316) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["review_id"], name: "index_code_samples_on_review_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "price"
+    t.integer "available_quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "ordered_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_ordered_items_on_item_id"
+    t.index ["order_id"], name: "index_ordered_items_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -98,6 +117,8 @@ ActiveRecord::Schema.define(version: 2023_06_26_105316) do
   add_foreign_key "audit_logs", "users"
   add_foreign_key "authentication_tokens", "users"
   add_foreign_key "code_samples", "reviews"
+  add_foreign_key "ordered_items", "items"
+  add_foreign_key "ordered_items", "orders"
   add_foreign_key "orders", "users"
   add_foreign_key "pair_programming_sessions", "projects"
   add_foreign_key "pair_programming_sessions", "users", column: "host_user_id"

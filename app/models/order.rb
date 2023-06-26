@@ -16,6 +16,6 @@ class Order < ApplicationRecord
     private
 
     def set_default_order_status
-        self.role ||= :pending
+        self.order_status ||= :pending
     end
 end
