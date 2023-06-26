@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_26_101429) do
+ActiveRecord::Schema.define(version: 2023_06_26_105316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,15 @@ ActiveRecord::Schema.define(version: 2023_06_26_101429) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["review_id"], name: "index_code_samples_on_review_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "total_price"
+    t.integer "order_status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "pair_programming_sessions", force: :cascade do |t|
@@ -89,6 +98,7 @@ ActiveRecord::Schema.define(version: 2023_06_26_101429) do
   add_foreign_key "audit_logs", "users"
   add_foreign_key "authentication_tokens", "users"
   add_foreign_key "code_samples", "reviews"
+  add_foreign_key "orders", "users"
   add_foreign_key "pair_programming_sessions", "projects"
   add_foreign_key "pair_programming_sessions", "users", column: "host_user_id"
   add_foreign_key "pair_programming_sessions", "users", column: "visitor_user_id"
