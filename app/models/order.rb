@@ -12,7 +12,8 @@ class Order < ApplicationRecord
     after_initialize :set_default_order_status, if: :new_record?
 
     belongs_to :user
-
+    has_many :ordered_items, dependent: :destroy
+    has_many :items, through: :ordered_items
     private
 
     def set_default_order_status

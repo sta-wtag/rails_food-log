@@ -3,6 +3,7 @@ class Api < Grape::API
     mount Login
     mount PairProgrammingSessions
     mount Items
+    mount Orders
     add_swagger_documentation
     rescue_from Grape::Exceptions::ValidationErrors do |e|
         rack_response({
