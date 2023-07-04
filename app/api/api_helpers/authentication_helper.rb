@@ -36,5 +36,11 @@ module ApiHelpers
         def raw_token(headers)
           return headers['Authorization'].split.last if headers['Authorization'].present?
         end
+        def isAdmin
+          unless current_user.role == 'admin' 
+            AuditLog.create data: 'Access Denied'
+            error!({ :error_msg => "permission_error", :error_code => ErrorCodes::PERMISSION_ERROR }, 404)
+          end  
+        end  
     end
 end

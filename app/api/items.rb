@@ -2,6 +2,7 @@ class Items < Grape::API
     helpers ApiHelpers::AuthenticationHelper
     before { restrict_access_to_developers }
     before { authenticate! }
+  
 
     format :json
     desc 'End-points for shop products'
@@ -24,6 +25,7 @@ class Items < Grape::API
             requires :available_quantity, type: Integer
         end
         post do
+            isAdmin
             item = Item.create!(params)
             present item, with: Entities::ItemEntity
         end 
@@ -36,6 +38,7 @@ class Items < Grape::API
             optional :available_quantity, type: Integer 
         end
         patch ':id' do 
+            isAdmin
             item = Item.find(params[:id])
             item.update!({
                 name: params[:name] || item.name,
@@ -50,6 +53,7 @@ class Items < Grape::API
             requires :id, type: Integer 
         end
         delete ':id' do
+            isAdmin
             item = Item.find(params[:id])
             item.destroy
             present item,  with: Entities::ItemEntity
