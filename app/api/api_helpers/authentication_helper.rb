@@ -6,7 +6,8 @@ module ApiHelpers
         end
 
         def current_user
-          token = AuthenticationToken.find_by_token(token_value_from_request)
+          headerToken = raw_token(request.headers)
+          token = AuthenticationToken.find_by_token(headerToken)
           return nil unless token.present?
           @current_user ||= token.user
         end
@@ -31,6 +32,9 @@ module ApiHelpers
             error!({ :error_msg => error_msg, :error_code => error_code }, 401)
             # LogAudit.new({env:env}).execute
           end
+        end
+        def raw_token(headers)
+          return headers['Authorization'].split.last if headers['Authorization'].present?
         end
     end
 end
