@@ -1,8 +1,7 @@
 class Orders < Grape::API
-    helpers ApiHelpers::AuthenticationHelper
     helpers ApiHelpers::OrderHelper
-    before { restrict_access_to_developers }
-    before { authenticate! }
+    helpers Doorkeeper::Grape::Helpers
+    before {doorkeeper_authorize!}
 
     format :json
     desc 'End-points for shop orders'

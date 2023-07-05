@@ -4,6 +4,7 @@ class Api < Grape::API
     mount PairProgrammingSessions
     mount Items
     mount Orders
+    mount Users
     add_swagger_documentation
     rescue_from Grape::Exceptions::ValidationErrors do |e|
         rack_response({

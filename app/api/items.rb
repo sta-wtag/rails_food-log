@@ -1,8 +1,7 @@
+require 'doorkeeper/grape/helpers'
 class Items < Grape::API
-    helpers ApiHelpers::AuthenticationHelper
-    before { restrict_access_to_developers }
-    before { authenticate! }
-  
+    helpers Doorkeeper::Grape::Helpers
+    before {doorkeeper_authorize!}
 
     format :json
     desc 'End-points for shop products'

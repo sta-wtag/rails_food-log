@@ -8,10 +8,16 @@ class User < ApplicationRecord
   attr_accessor :name
 
   after_initialize :set_default_role, if: :new_record?
-
+  def self.authenticate(email,password)
+    user = User.find_for_authentication(email: email)
+    binding.pry
+    user&.valid_password?(password) ? user : nil
+  end 
   private
 
   def set_default_role
     self.role ||= :customer
   end
+
+   
 end

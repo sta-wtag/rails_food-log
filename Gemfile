@@ -35,6 +35,7 @@ gem 'pg'
 gem 'grape-entity'
 gem 'jwt'
 gem 'pry-rails'
+gem 'doorkeeper', '~> 5.4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
