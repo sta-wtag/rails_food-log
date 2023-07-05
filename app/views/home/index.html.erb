@@ -1,2 +1,10 @@
 
   <h2>Hey <%= current_user.name %></h2>
+  <% if user_signed_in?   %>
+       <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "logout-button" , form: { action: destroy_user_session_path, method: :delete } %>
+  <% end %> 
+
+  <% if flash[:notice] == "Signed out successfully." %>
+     jkdgjkdgdfjk
+  <% end %>    
+
