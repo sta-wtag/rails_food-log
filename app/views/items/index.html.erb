@@ -1,4 +1,4 @@
-
+<% if user_signed_in? %>
 <div class="table-container m-6">
 <h1 class="title is-4">Items</h1>
   <table class="table">
@@ -26,3 +26,6 @@
   </tbody>
   </table>
 </div>
+ <% else %>
+  <div>user not authorized</div>
+<% end %>
