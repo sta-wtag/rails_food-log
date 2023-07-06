@@ -1,0 +1,25 @@
+<h1 class="title is-4 m-6">Item Details</h1>
+
+<div class="card m-6">
+  <header class="card-header">
+    <p class="card-header-title">
+      <%= @item.name %>
+    </p>
+    <button class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </header>
+  <div class="card-content">
+    <div class="content">
+      <%= @item.description%>
+      <br>
+      <time class="mt-4" datetime="2016-1-1"><%= @item.created_at%></time>
+    </div>
+  </div>
+  <footer class="card-footer">
+    <a href="#" class="card-footer-item">Edit</a>
+    <a href="#" class="card-footer-item">Delete</a>
+  </footer>
+</div>
