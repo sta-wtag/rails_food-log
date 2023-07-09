@@ -1,0 +1,35 @@
+<%= form_with model: item do |f| %>
+    <div class="field">
+      <label class="label">Item Name</label>
+      <div class="control">
+        <%= f.text_field :name, class:"input", placeholder:"Enter Item Name" %>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <%= f.text_area :description, class:"textarea", placeholder:"Enter Item Name" %>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">price</label>
+      <div class="control">
+        <%= f.text_field :price, class:"input", placeholder:"Enter Price" %>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Available Quantity</label>
+      <div class="control">
+        <%= f.text_field :available_quantity, class:"input", placeholder:"Enter Quantity" %>
+      </div>
+    </div>
+    <div class="field is-grouped">
+      <div class="control">
+      <%= f.button 'Submit', class:"button is-link" %>
+        <%# <button class="button is-link">Submit</button> %>
+      </div>
+      <div class="control">
+        <button class="button is-link is-light">Cancel</button>
+      </div>
+    </div>
+<% end %>
