@@ -1,0 +1,11 @@
+<%= form_with(model: @order, url: orders_path, local: true) do |form| %>
+  <% @order.ordered_items.each do |order_item| %>
+      
+        <%= form.collection_select :item_id, @items, :id, :name, prompt: true %>
+            
+        <%= form.number_field :quantity %>
+
+  <% end %>
+  
+  <%= form.submit 'Create Order' %>
+<% end %>

@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   mount Api => '/'
 
   # edit_entry GET  '/items/:id/edit(.:format)'  items
-  resources :items 
+  resources :items , :orders
 end
