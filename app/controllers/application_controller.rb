@@ -7,4 +7,5 @@ class ApplicationController < ActionController::Base
         @current_user = User.find_by(id:1)
     end
   end 
+  
 end

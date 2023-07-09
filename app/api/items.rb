@@ -1,5 +1,6 @@
 require 'doorkeeper/grape/helpers'
 class Items < Grape::API
+    helpers ApiHelpers::UsersHelper
     helpers Doorkeeper::Grape::Helpers
     before {doorkeeper_authorize!}
 
@@ -24,7 +25,7 @@ class Items < Grape::API
             requires :available_quantity, type: Integer
         end
         post do
-            isAdmin
+            isAdmin(current_user)
             item = Item.create!(params)
             present item, with: Entities::ItemEntity
         end 
@@ -37,7 +38,7 @@ class Items < Grape::API
             optional :available_quantity, type: Integer 
         end
         patch ':id' do 
-            isAdmin
+            isAdmin(current_user)
             item = Item.find(params[:id])
             item.update!({
                 name: params[:name] || item.name,
@@ -52,7 +53,7 @@ class Items < Grape::API
             requires :id, type: Integer 
         end
         delete ':id' do
-            isAdmin
+            isAdmin(current_user)
             item = Item.find(params[:id])
             item.destroy
             present item,  with: Entities::ItemEntity

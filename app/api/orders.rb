@@ -1,5 +1,6 @@
 class Orders < Grape::API
     helpers ApiHelpers::OrderHelper
+    helpers ApiHelpers::UsersHelper
     helpers Doorkeeper::Grape::Helpers
     before {doorkeeper_authorize!}
 
@@ -7,7 +8,7 @@ class Orders < Grape::API
     desc 'End-points for shop orders'
     namespace :orders do
         get do
-            isAdmin
+            isAdmin(current_user)
             orders = Order.all
             present orders, with: Entities::OrderEntity
         end
@@ -23,7 +24,7 @@ class Orders < Grape::API
             requires :ordered_items, type: Array 
         end    
         post do
-            isAdmin
+            isAdmin(current_user)
             total_quantity = 0 
             total_price = 0
             params[:ordered_items].each do |ordered_item|

@@ -12,6 +12,12 @@ module ApiHelpers
                     available_quantity: item.available_quantity - ordered_item[:quantity]
                 })
             end 
-         end   
+         end  
+         def isAdmin(current_user)
+            unless current_user.role == 'admin' 
+              AuditLog.create data: 'Access Denied'
+              error!({ :error_msg => "permission_error", :error_code => ErrorCodes::PERMISSION_ERROR }, 404)
+            end  
+          end  
     end
 end
