@@ -6,7 +6,8 @@ module ApiHelpers
                 OrderedItem.create!({
                     order_id: order_id,
                     item_id: ordered_item[:id],
-                    quantity: ordered_item[:quantity]
+                    quantity: ordered_item[:quantity],
+                    price: item.price
                 })
                 item.update({
                     available_quantity: item.available_quantity - ordered_item[:quantity]

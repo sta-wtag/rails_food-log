@@ -24,7 +24,6 @@ class Orders < Grape::API
             requires :ordered_items, type: Array 
         end    
         post do
-            isAdmin(current_user)
             total_quantity = 0 
             total_price = 0
             params[:ordered_items].each do |ordered_item|
@@ -44,6 +43,61 @@ class Orders < Grape::API
                 total_price: total_price
             })
             createOrderedItem(params[:ordered_items], order.id)
+        end  
+        params do
+            optional :user_id, type: Integer
+            optional :ordered_items, type: Array 
+        end 
+        patch ':id' do
+            isAdmin(current_user)
+            order = Order.find(params[:id])
+            if !order.disputed?
+                order.update!({
+                    total_price: params[:total_price] || order.total_price,
+                    order_status: params[:order_status] || order.order_status
+                })
+            else   
+                error_msg = 'The order is already disputed.Can not update it.'
+                error!({ 'error_msg' => error_msg }, 404) 
+            end
+            present order,  with: Entities::OrderEntity
+        end   
+        patch ':id/cancel_order' do
+            order = Order.find(params[:id])
+            if !order.disputed?
+                order.update!({
+                    order_status: 6
+                })
+            else   
+                error_msg = 'The order is already disputed.Can not update it.'
+                error!({ 'error_msg' => error_msg }, 404) 
+            end
+            
+            present order,  with: Entities::OrderEntity
+        end 
+        patch ':id/confirm_order' do
+            order = Order.find(params[:id])
+            if !order.disputed?
+                order.update!({
+                    order_status: 2
+                })
+            else   
+                error_msg = 'The order is already disputed.Can not update it.'
+                error!({ 'error_msg' => error_msg }, 404) 
+            end
+            
+            present order,  with: Entities::OrderEntity
+        end 
+        delete ':id' do
+            isAdmin(current_user)
+            order = Order.find(params[:id])
+            if order.pending?
+                order.destroy
+            else   
+                error_msg = 'Can not delete this order'
+                error!({ 'error_msg' => error_msg }, 404) 
+            end
         end    
+
     end
 end
