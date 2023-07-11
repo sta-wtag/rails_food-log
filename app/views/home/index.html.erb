@@ -1,10 +1,14 @@
-
-  <h2>Hey <%= current_user.name %></h2>
+<div class=" m-6">
   <% if user_signed_in?   %>
+   <h2>Hey <span class="has-text-primary"> <%= current_user.name %> </span></h2>
        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "logout-button" , form: { action: destroy_user_session_path, method: :delete } %>
+  <% else%>    
+         <h1>Please Login</h1> 
+        <%= link_to "Login", new_user_session_path, class: "logout-button"  %> 
   <% end %> 
 
   <% if flash[:notice] == "Signed out successfully." %>
-     jkdgjkdgdfjk
   <% end %>    
+
+  </div>
 
