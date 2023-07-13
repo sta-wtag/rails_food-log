@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
     end
 
     def show 
-        @order = Order.find(params[:id])
+      @order = Order.includes(ordered_items: :item).find(params[:id])
+      @ordered_items = @order.ordered_items.map(&:item)
     end
 
     def create 
